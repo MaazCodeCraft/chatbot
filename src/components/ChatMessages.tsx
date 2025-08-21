@@ -12,7 +12,7 @@ interface Props {
 
 export const ChatMessages = ({ chatMessages }: Props) => {
   return (
-    <>
+    <div className="flex-grow mt-5 overflow-scroll [scrollbar-width:none]">
       {chatMessages.map((chatMessage) => {
         return (
           <ChatMessage
@@ -22,6 +22,6 @@ export const ChatMessages = ({ chatMessages }: Props) => {
           />
         );
       })}
-    </>
+    </div>
   );
 };

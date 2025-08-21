@@ -68,7 +68,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex mb-15">
       <input
         placeholder="Send a message to chatbot"
         size={30}

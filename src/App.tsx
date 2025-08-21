@@ -27,12 +27,12 @@ const App = () => {
   ]);
 
   return (
-    <div className="max-w-[600px] ml-auto mr-auto">
+    <div className="max-w-[600px] ml-auto mr-auto h-screen flex flex-col">
+      <ChatMessages chatMessages={chatMessages} />
       <ChatInput
         chatMessages={chatMessages}
         setChatMessages={setChatMessages}
       />
-      <ChatMessages chatMessages={chatMessages} />
     </div>
   );
 };
