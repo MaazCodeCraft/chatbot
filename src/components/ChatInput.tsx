@@ -75,8 +75,14 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         onChange={saveInputText}
         value={inputText}
         onKeyDown={handleKeyDown}
+        className="px-4 py-3 rounded-[10px] border-[1px] text-[15px]"
       />
-      <button onClick={sendMessage}>Send</button>
+      <button
+        onClick={sendMessage}
+        className="px-5 py-3 ml-2 border-0 rounded-[10px] text-[15px] cursor-pointer bg-[rgb(25,135,84)] text-white"
+      >
+        Send
+      </button>
     </>
   );
 };
