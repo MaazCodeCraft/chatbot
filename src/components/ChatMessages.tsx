@@ -1,44 +1,18 @@
-import { useState } from "react";
 import ChatMessage from "./ChatMessage";
 
-export const ChatMessages = () => {
-  const [chatMessages, setChatMessages] = useState([
-    {
-      message: "hello chatbot",
-      sender: "user",
-      id: "id1",
-    },
-    {
-      message: "How I can help you?",
-      sender: "robot",
-      id: "id2",
-    },
-    {
-      message: "can you get me todays date?",
-      sender: "user",
-      id: "id3",
-    },
-    {
-      message: "Today is August 21",
-      sender: "robot",
-      id: "id4",
-    },
-  ]);
+interface ChatMessageType {
+  message: string;
+  sender: string;
+  id: string;
+}
 
-  function sendMessage() {
-    setChatMessages([
-      ...chatMessages,
-      {
-        message: "test",
-        sender: "user",
-        id: crypto.randomUUID(),
-      },
-    ]);
-  }
+interface Props {
+  chatMessages: ChatMessageType[];
+}
 
+export const ChatMessages = ({ chatMessages }: Props) => {
   return (
     <>
-      <button onClick={sendMessage}>Send a Message</button>
       {chatMessages.map((chatMessage) => {
         return (
           <ChatMessage
