@@ -27,13 +27,13 @@ const App = () => {
   ]);
 
   return (
-    <>
+    <div className="max-w-[600px] ml-auto mr-auto">
       <ChatInput
         chatMessages={chatMessages}
         setChatMessages={setChatMessages}
       />
       <ChatMessages chatMessages={chatMessages} />
-    </>
+    </div>
   );
 };
 export default App;

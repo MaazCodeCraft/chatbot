@@ -68,14 +68,14 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
   }
 
   return (
-    <>
+    <div className="flex">
       <input
         placeholder="Send a message to chatbot"
         size={30}
         onChange={saveInputText}
         value={inputText}
         onKeyDown={handleKeyDown}
-        className="px-4 py-3 rounded-[10px] border-[1px] text-[15px]"
+        className="px-4 py-3 rounded-[10px] border-[1px] text-[15px] flex-grow"
       />
       <button
         onClick={sendMessage}
@@ -83,7 +83,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
       >
         Send
       </button>
-    </>
+    </div>
   );
 };
 
