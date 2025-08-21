@@ -16,12 +16,19 @@ interface Props {
 
 const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
   const [inputText, setInputText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function saveInputText(event: ChangeEvent<HTMLInputElement>) {
     setInputText(event.target.value);
   }
 
-  function sendMessage() {
+  async function sendMessage() {
+    if (isLoading || inputText === "") {
+      return;
+    }
+
+    setIsLoading(true);
+
     const newChatMessages = [
       ...chatMessages,
       {
@@ -29,22 +36,27 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         sender: "user",
         id: crypto.randomUUID(),
       },
+      {
+        message: "Loading...",
+        sender: "robot",
+        id: crypto.randomUUID(),
+      },
     ];
 
     setChatMessages(newChatMessages);
+    setInputText("");
 
-    const response = Chatbot.getResponse(inputText);
+    const response = await Chatbot.getResponseAsync(inputText);
 
     setChatMessages([
-      ...newChatMessages,
+      ...newChatMessages.slice(0, newChatMessages.length - 1),
       {
         message: response,
         sender: "robot",
         id: crypto.randomUUID(),
       },
     ]);
-
-    setInputText("");
+    setIsLoading(false);
   }
 
   function handleKeyDown(event: KeyboardEvent) {
