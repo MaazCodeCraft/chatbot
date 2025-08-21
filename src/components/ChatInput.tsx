@@ -1,6 +1,8 @@
 import React, { useState, type ChangeEvent } from "react";
 import { Chatbot } from "supersimpledev";
 
+import { type KeyboardEvent } from "react";
+
 interface ChatMessageType {
   message: string;
   sender: string;
@@ -45,6 +47,14 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
     setInputText("");
   }
 
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      sendMessage();
+    } else if (event.key === "Escape") {
+      setInputText("");
+    }
+  }
+
   return (
     <>
       <input
@@ -52,6 +62,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         size={30}
         onChange={saveInputText}
         value={inputText}
+        onKeyDown={handleKeyDown}
       />
       <button onClick={sendMessage}>Send</button>
     </>
