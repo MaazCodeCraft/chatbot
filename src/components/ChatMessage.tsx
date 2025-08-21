@@ -9,10 +9,19 @@ interface Props {
 
 function ChatMessage({ message, sender }: Props) {
   return (
-    <div className={sender === "user" ? "flex justify-end" : "flex"}>
-      {sender === "robot" && <img src={RobotProfileImage} width={40} />}
-      <div className="bg-[rgb(238,238,238)]">{message}</div>
-      {sender === "user" && <img src={userProfileImage} width={40} />}
+    <div
+      className={
+        sender === "user" ? "flex justify-end items-start" : "flex items-start"
+      }
+    >
+      {sender === "robot" && <img src={RobotProfileImage} className="w-11" />}
+      <div
+        className="
+        bg-[#eeeeee] py-4 px-5 rounded-[10px] mr-2 ml-2 mb-5 max-w-[340px]"
+      >
+        {message}
+      </div>
+      {sender === "user" && <img src={userProfileImage} className="w-11" />}
     </div>
   );
 }
