@@ -1,4 +1,5 @@
 import React, { useState, type ChangeEvent } from "react";
+import { Chatbot } from "supersimpledev";
 
 interface ChatMessageType {
   message: string;
@@ -12,21 +13,36 @@ interface Props {
 }
 
 const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
-  const [textInput, setTextInput] = useState("");
+  const [inputText, setInputText] = useState("");
 
   function saveInputText(event: ChangeEvent<HTMLInputElement>) {
-    setTextInput(event.target.value);
+    setInputText(event.target.value);
   }
 
   function sendMessage() {
-    setChatMessages([
+    const newChatMessages = [
       ...chatMessages,
       {
-        message: "test",
+        message: inputText,
         sender: "user",
         id: crypto.randomUUID(),
       },
+    ];
+
+    setChatMessages(newChatMessages);
+
+    const response = Chatbot.getResponse(inputText);
+
+    setChatMessages([
+      ...newChatMessages,
+      {
+        message: response,
+        sender: "robot",
+        id: crypto.randomUUID(),
+      },
     ]);
+
+    setInputText("");
   }
 
   return (
@@ -35,6 +51,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         placeholder="Send a message to chatbot"
         size={30}
         onChange={saveInputText}
+        value={inputText}
       />
       <button onClick={sendMessage}>Send</button>
     </>
