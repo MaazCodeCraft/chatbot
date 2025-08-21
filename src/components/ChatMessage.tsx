@@ -4,6 +4,7 @@ import RobotProfileImage from "../assets/robot.png";
 interface Props {
   message: string;
   sender: string;
+  key: string;
 }
 
 function ChatMessage({ message, sender }: Props) {
