@@ -1,13 +1,9 @@
 import React, { useState, type ChangeEvent } from "react";
 import { Chatbot } from "supersimpledev";
+import LoadingSpinner from "../assets/loading-spinner.gif";
+import type { ChatMessageType } from "../types/chat";
 
 import { type KeyboardEvent } from "react";
-
-interface ChatMessageType {
-  message: string;
-  sender: string;
-  id: string;
-}
 
 interface Props {
   chatMessages: ChatMessageType[];
@@ -29,7 +25,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
 
     setIsLoading(true);
 
-    const newChatMessages = [
+    const newChatMessages: ChatMessageType[] = [
       ...chatMessages,
       {
         message: inputText,
@@ -37,7 +33,13 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         id: crypto.randomUUID(),
       },
       {
-        message: "Loading...",
+        message: (
+          <img
+            src={LoadingSpinner}
+            alt="loading..."
+            className="m[-15px] h-10"
+          />
+        ),
         sender: "robot",
         id: crypto.randomUUID(),
       },

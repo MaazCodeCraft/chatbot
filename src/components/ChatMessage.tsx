@@ -1,10 +1,10 @@
 import userProfileImage from "../assets/user.png";
 import RobotProfileImage from "../assets/robot.png";
+import type { ReactNode } from "react";
 
 interface Props {
-  message: string;
+  message: ReactNode;
   sender: string;
-  key: string;
 }
 
 function ChatMessage({ message, sender }: Props) {
