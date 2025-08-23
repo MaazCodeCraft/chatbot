@@ -1,7 +1,7 @@
 import React, { useState, type ChangeEvent } from "react";
-import { Chatbot } from "supersimpledev";
 import LoadingSpinner from "../assets/loading-spinner.gif";
 import type { ChatMessageType } from "../types/chat";
+import { getChatbotResponse } from "../utils/Chatbot";
 
 import { type KeyboardEvent } from "react";
 
@@ -48,7 +48,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
     setChatMessages(newChatMessages);
     setInputText("");
 
-    const response = await Chatbot.getResponseAsync(inputText);
+    const response = await getChatbotResponse(inputText);
 
     setChatMessages([
       ...newChatMessages.slice(0, newChatMessages.length - 1),

@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 interface Props {
   message: ReactNode;
-  sender: string;
+  sender: "user" | "robot";
 }
 
 function ChatMessage({ message, sender }: Props) {
