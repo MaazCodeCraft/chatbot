@@ -1,4 +1,4 @@
-import userProfileImage from "../assets/user.png";
+import userProfileImage from "../assets/profile-1.JPG";
 import RobotProfileImage from "../assets/robot.png";
 import type { ReactNode } from "react";
 
@@ -21,7 +21,12 @@ function ChatMessage({ message, sender }: Props) {
       >
         {message}
       </div>
-      {sender === "user" && <img src={userProfileImage} className="w-11" />}
+      {sender === "user" && (
+        <img
+          src={userProfileImage}
+          className="w-11 h-11 rounded-[45px] object-cover"
+        />
+      )}
     </div>
   );
 }
