@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
 
 interface ChatMessageType {
@@ -11,8 +12,20 @@ interface Props {
 }
 
 export const ChatMessages = ({ chatMessages }: Props) => {
+  const chatMessagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const containerElem = chatMessagesRef.current;
+    if (containerElem) {
+      containerElem.scrollTop = containerElem.scrollHeight;
+    }
+  }, [chatMessages]);
+
   return (
-    <div className="flex-grow mt-5 overflow-scroll [scrollbar-width:none]">
+    <div
+      className="flex-grow mt-5 overflow-scroll [scrollbar-width:none]"
+      ref={chatMessagesRef}
+    >
       {chatMessages.map((chatMessage) => {
         return (
           <ChatMessage
