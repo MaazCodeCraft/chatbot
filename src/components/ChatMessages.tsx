@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
 import type { ChatMessageType } from "../types/chat";
+import dayjs from "dayjs";
 
 interface Props {
   chatMessages: ChatMessageType[];
@@ -27,6 +28,7 @@ export const ChatMessages = ({ chatMessages }: Props) => {
             message={chatMessage.message}
             sender={chatMessage.sender}
             key={chatMessage.id}
+            time={dayjs(chatMessage.time).format("hh:mm A")}
           />
         );
       })}

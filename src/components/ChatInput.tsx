@@ -1,9 +1,8 @@
-import React, { useState, type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import LoadingSpinner from "../assets/loading-spinner.gif";
 import type { ChatMessageType } from "../types/chat";
 import { getChatbotResponse } from "../utils/Chatbot";
-
-import { type KeyboardEvent } from "react";
+import dayjs from "dayjs";
 
 interface Props {
   chatMessages: ChatMessageType[];
@@ -31,6 +30,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         message: inputText,
         sender: "user",
         id: crypto.randomUUID(),
+        time: dayjs().valueOf(),
       },
       {
         message: (
@@ -42,6 +42,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         ),
         sender: "robot",
         id: crypto.randomUUID(),
+        time: dayjs().valueOf(),
       },
     ];
 
@@ -56,6 +57,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         message: response,
         sender: "robot",
         id: crypto.randomUUID(),
+        time: dayjs().valueOf(),
       },
     ]);
     setIsLoading(false);
