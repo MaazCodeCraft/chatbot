@@ -1,5 +1,5 @@
-import { Chatbot } from "supersimpledev";
+import { getGeminiResponse } from "./GeminiAPI";
 
-export async function getChatbotResponse(input: string): Promise<string> {
-  return await Chatbot.getResponseAsync(input);
+export async function getChatbotResponse(message: string): Promise<string> {
+  return await getGeminiResponse(message);
 }

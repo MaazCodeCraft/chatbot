@@ -51,19 +51,35 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
     setChatMessages(newChatMessages);
     setInputText("");
 
-    const response = await getChatbotResponse(inputText);
-    const responseTime = dayjs().format("h:mm A");
+    try {
+      const response = await getChatbotResponse(inputText);
+      const responseTime = dayjs().format("h:mm A");
 
-    setChatMessages([
-      ...newChatMessages.slice(0, newChatMessages.length - 1),
-      {
-        message: response,
-        sender: "robot",
-        id: crypto.randomUUID(),
-        time: responseTime,
-      },
-    ]);
-    setIsLoading(false);
+      setChatMessages([
+        ...newChatMessages.slice(0, newChatMessages.length - 1),
+        {
+          message: response,
+          sender: "robot",
+          id: crypto.randomUUID(),
+          time: responseTime,
+        },
+      ]);
+    } catch (error) {
+      console.error("Error getting chatbot response:", error);
+      const errorTime = dayjs().format("h:mm A");
+
+      setChatMessages([
+        ...newChatMessages.slice(0, newChatMessages.length - 1),
+        {
+          message: "Sorry, I encountered an error. Please try again.",
+          sender: "robot",
+          id: crypto.randomUUID(),
+          time: errorTime,
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleKeyDown(event: KeyboardEvent) {
@@ -83,12 +99,14 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         value={inputText}
         onKeyDown={handleKeyDown}
         className="px-4 py-3 rounded-[10px] border-[1px] text-[15px] flex-grow"
+        disabled={isLoading}
       />
       <button
         onClick={sendMessage}
-        className="px-5 py-3 ml-2 border-0 rounded-[10px] text-[15px] cursor-pointer bg-[rgb(25,135,84)] text-white"
+        disabled={isLoading}
+        className="px-5 py-3 ml-2 border-0 rounded-[10px] text-[15px] cursor-pointer bg-[rgb(25,135,84)] text-white disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Send
+        {isLoading ? "Sending..." : "Send"}
       </button>
     </div>
   );

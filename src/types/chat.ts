@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 export interface ChatMessageType {
-  message: string | ReactNode; // can be text or JSX like <img />
+  message: string | ReactNode;
   sender: "user" | "robot";
   id: string;
   time: string;

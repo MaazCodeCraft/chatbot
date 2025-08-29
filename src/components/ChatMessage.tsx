@@ -21,11 +21,7 @@ function ChatMessage({ message, sender, time }: Props) {
         bg-[#eeeeee] py-4 px-5 rounded-[10px] mr-2 ml-2 mb-5 max-w-[340px]"
       >
         {message}
-        {time && (
-          <div className="text-[14px] text-[rgb(125,125,125)] mt-[5px]">
-            {time}
-          </div>
-        )}
+        {time && <div className="">{time}</div>}
       </div>
       {sender === "user" && (
         <img
