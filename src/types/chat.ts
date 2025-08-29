@@ -4,5 +4,5 @@ export interface ChatMessageType {
   message: string | ReactNode; // can be text or JSX like <img />
   sender: "user" | "robot";
   id: string;
-  time: number;
+  time: string;
 }

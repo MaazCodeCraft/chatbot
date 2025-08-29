@@ -24,13 +24,15 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
 
     setIsLoading(true);
 
+    const currentTime = dayjs().format("h:mm A");
+
     const newChatMessages: ChatMessageType[] = [
       ...chatMessages,
       {
         message: inputText,
         sender: "user",
         id: crypto.randomUUID(),
-        time: dayjs().valueOf(),
+        time: currentTime,
       },
       {
         message: (
@@ -42,7 +44,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         ),
         sender: "robot",
         id: crypto.randomUUID(),
-        time: dayjs().valueOf(),
+        time: currentTime,
       },
     ];
 
@@ -50,6 +52,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
     setInputText("");
 
     const response = await getChatbotResponse(inputText);
+    const responseTime = dayjs().format("h:mm A");
 
     setChatMessages([
       ...newChatMessages.slice(0, newChatMessages.length - 1),
@@ -57,7 +60,7 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
         message: response,
         sender: "robot",
         id: crypto.randomUUID(),
-        time: dayjs().valueOf(),
+        time: responseTime,
       },
     ]);
     setIsLoading(false);
