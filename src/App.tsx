@@ -5,7 +5,11 @@ import type { ChatMessageType } from "./types/chat";
 import { testGeminiConnection } from "./utils/GeminiAPI";
 
 const App = () => {
-  const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessageType[]>(() => {
+    const saved = localStorage.getItem("chatMessages");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [apiStatus, setApiStatus] = useState<
     "checking" | "connected" | "error"
   >("checking");
@@ -34,6 +38,10 @@ const App = () => {
 
     testConnection();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(chatMessages));
+  }, [chatMessages]);
 
   return (
     <div className="max-w-[600px] ml-auto mr-auto h-screen flex flex-col">
