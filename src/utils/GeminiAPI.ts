@@ -5,7 +5,7 @@ const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-
 
 export async function getGeminiResponse(prompt: string): Promise<string> {
   try {
-    console.log("Sending request to Gemini API");
+    // console.log("Sending request to Gemini API");
 
     const response = await fetch(`${API_URL}?key=${API_KEY}`, {
       method: "POST",
