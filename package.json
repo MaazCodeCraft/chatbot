@@ -4,11 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"cd backend && npm run dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "dev:full": "concurrently \"npm run dev\" \"cd backend && npm run dev\""
+    "preview": "vite preview"
   },
   "dependencies": {
     "@google/genai": "^1.16.0",
