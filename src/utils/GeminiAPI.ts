@@ -1,59 +1,25 @@
-import { API_CONFIG, GENERATION_CONFIG, ERROR_MESSAGES } from "../constants/api";
-import type { GeminiRequest, GeminiResponse } from "../types/api";
+import { ERROR_MESSAGES } from "../constants/api";
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
-const buildApiUrl = (): string => {
-  return `${API_CONFIG.BASE_URL}/${API_CONFIG.MODEL}:${API_CONFIG.ENDPOINT}`;
-};
-
-const buildRequestBody = (prompt: string): GeminiRequest => ({
-  contents: [{
-    parts: [{
-      text: prompt
-    }]
-  }],
-  generationConfig: GENERATION_CONFIG
-});
-
-const cleanMarkdownFormatting = (text: string): string => {
-  return text.replace(/\*\*(.*?)\*\*/g, '$1');
-};
-
-const extractResponseText = (data: GeminiResponse): string | null => {
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  return text ? cleanMarkdownFormatting(text) : null;
-};
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function getGeminiResponse(prompt: string): Promise<string> {
   try {
-    const response = await fetch(`${buildApiUrl()}?key=${API_KEY}`, {
+    const response = await fetch(`${API_BASE_URL}/chat/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(buildRequestBody(prompt)),
+      body: JSON.stringify({ message: prompt }),
     });
 
-    const data: GeminiResponse = await response.json();
+    const data = await response.json();
 
     if (!response.ok) {
       console.error("API Error:", data);
-      
-      if (data.error?.message) {
-        return `API Error: ${data.error.message}`;
-      }
-      
-      return ERROR_MESSAGES.API_KEY_ERROR;
+      return `API Error: ${data.error || 'Unknown error'}`;
     }
 
-    const responseText = extractResponseText(data);
-    if (responseText) {
-      return responseText;
-    }
-    
-    console.error("Unexpected response format:", data);
-    return ERROR_MESSAGES.UNEXPECTED_FORMAT;
+    return data.response || ERROR_MESSAGES.UNEXPECTED_FORMAT;
   } catch (error) {
     console.error("Network error:", error);
     return ERROR_MESSAGES.NETWORK_ERROR;
