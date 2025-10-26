@@ -29,6 +29,10 @@ const App = () => {
 
 
 
+  const clearAllChats = () => {
+    setChatMessages([]);
+  };
+
   return (
     <div className="max-w-[600px] ml-auto mr-auto h-screen flex flex-col">
       {apiStatus === "error" && (
@@ -51,6 +55,7 @@ const App = () => {
       <ChatInput
         chatMessages={chatMessages}
         setChatMessages={setChatMessages}
+        clearAllChats={clearAllChats}
       />
     </div>
   );

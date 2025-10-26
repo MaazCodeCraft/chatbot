@@ -15,7 +15,14 @@ function ChatMessage({ message, sender, time }: Props) {
         sender === "user" ? "flex justify-end items-start" : "flex items-start"
       }
     >
-      {sender === "robot" && <img src={RobotProfileImage} className="w-11" />}
+      {sender === "robot" && (
+        <img 
+          src={RobotProfileImage} 
+          className="w-16 h-16 rounded-full object-cover shadow-md" 
+          style={{ imageRendering: 'auto', filter: 'contrast(1.1) brightness(1.05)' }}
+          alt="Robot"
+        />
+      )}
       <div
         className="
         bg-[#eeeeee] py-4 px-5 rounded-[10px] mr-2 ml-2 mb-5 max-w-[340px]"
@@ -30,7 +37,9 @@ function ChatMessage({ message, sender, time }: Props) {
       {sender === "user" && (
         <img
           src={userProfileImage}
-          className="w-11 h-11 rounded-[45px] object-cover"
+          className="w-16 h-16 rounded-full object-cover shadow-md"
+          style={{ imageRendering: 'auto', filter: 'contrast(1.1) brightness(1.05)' }}
+          alt="User"
         />
       )}
     </div>
