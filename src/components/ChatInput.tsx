@@ -4,8 +4,6 @@ import type { ChatMessageType } from "../types/chat";
 import { getChatbotResponse } from "../utils/Chatbot";
 import { ERROR_MESSAGES } from "../constants/api";
 import { createUserMessage, createRobotMessage } from "../utils/messageHelpers";
-import dayjs from "dayjs";
-
 interface Props {
   chatMessages: ChatMessageType[];
   setChatMessages: React.Dispatch<React.SetStateAction<ChatMessageType[]>>;
@@ -28,11 +26,7 @@ const ChatInput = ({ chatMessages, setChatMessages, clearAllChats }: Props) => {
     setIsLoading(true);
 
     const loadingSpinner = (
-      <img
-        src={LoadingSpinner}
-        alt="loading..."
-        className="m[-15px] h-10"
-      />
+      <img src={LoadingSpinner} alt="loading..." className="m[-15px] h-10" />
     );
 
     const newChatMessages: ChatMessageType[] = [
@@ -93,8 +87,13 @@ const ChatInput = ({ chatMessages, setChatMessages, clearAllChats }: Props) => {
               type="button"
               title="Delete all chats"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
               </svg>
             </button>
           )}
@@ -105,8 +104,13 @@ const ChatInput = ({ chatMessages, setChatMessages, clearAllChats }: Props) => {
               type="button"
               title="Clear input"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
               </svg>
             </button>
           )}
