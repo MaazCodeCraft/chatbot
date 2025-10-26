@@ -1,6 +1,6 @@
 // Replace this with your actual API key from https://aistudio.google.com/apikey
-const API_KEY = "AIzaSyAZk5OEZQqU5ZO6_QdIlGRS6vUNx1OGSQA"; // ← Replace this with your actual key
-const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const API_KEY = "AIzaSyD1HD7wQ9GFAXmkgtSlTjMTg06Sx5zseSw"; // ← Replace this with your actual key
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
 
 export async function getGeminiResponse(prompt: string): Promise<string> {
