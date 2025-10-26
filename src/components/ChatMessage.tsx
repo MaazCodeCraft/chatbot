@@ -1,4 +1,4 @@
-import userProfileImage from "../assets/profile-1.JPG";
+import userProfileImage from "../assets/profile-1.jpg";
 import RobotProfileImage from "../assets/robot.png";
 import type { ReactNode } from "react";
 

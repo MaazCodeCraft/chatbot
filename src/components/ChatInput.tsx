@@ -2,6 +2,8 @@ import React, { useState, type ChangeEvent, type KeyboardEvent } from "react";
 import LoadingSpinner from "../assets/loading-spinner.gif";
 import type { ChatMessageType } from "../types/chat";
 import { getChatbotResponse } from "../utils/Chatbot";
+import { ERROR_MESSAGES } from "../constants/api";
+import { createUserMessage, createRobotMessage } from "../utils/messageHelpers";
 import dayjs from "dayjs";
 
 interface Props {
@@ -24,28 +26,18 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
 
     setIsLoading(true);
 
-    const currentTime = dayjs().format("h:mm A");
+    const loadingSpinner = (
+      <img
+        src={LoadingSpinner}
+        alt="loading..."
+        className="m[-15px] h-10"
+      />
+    );
 
     const newChatMessages: ChatMessageType[] = [
       ...chatMessages,
-      {
-        message: inputText,
-        sender: "user",
-        id: crypto.randomUUID(),
-        time: currentTime,
-      },
-      {
-        message: (
-          <img
-            src={LoadingSpinner}
-            alt="loading..."
-            className="m[-15px] h-10"
-          />
-        ),
-        sender: "robot",
-        id: crypto.randomUUID(),
-        time: currentTime,
-      },
+      createUserMessage(inputText),
+      createRobotMessage(loadingSpinner),
     ];
 
     setChatMessages(newChatMessages);
@@ -53,29 +45,15 @@ const ChatInput = ({ chatMessages, setChatMessages }: Props) => {
 
     try {
       const response = await getChatbotResponse(inputText);
-      const responseTime = dayjs().format("h:mm A");
-
       setChatMessages([
         ...newChatMessages.slice(0, newChatMessages.length - 1),
-        {
-          message: response,
-          sender: "robot",
-          id: crypto.randomUUID(),
-          time: responseTime,
-        },
+        createRobotMessage(response),
       ]);
     } catch (error) {
       console.error("Error getting chatbot response:", error);
-      const errorTime = dayjs().format("h:mm A");
-
       setChatMessages([
         ...newChatMessages.slice(0, newChatMessages.length - 1),
-        {
-          message: "Sorry, I encountered an error. Please try again.",
-          sender: "robot",
-          id: crypto.randomUUID(),
-          time: errorTime,
-        },
+        createRobotMessage(ERROR_MESSAGES.GENERAL_ERROR),
       ]);
     } finally {
       setIsLoading(false);

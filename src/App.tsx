@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import ChatInput from "./components/ChatInput";
 import { ChatMessages } from "./components/ChatMessages";
 import type { ChatMessageType } from "./types/chat";
+import type { ApiStatus } from "./types/api";
 import { testGeminiConnection } from "./utils/GeminiAPI";
+import { ERROR_MESSAGES } from "./constants/api";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { createRobotMessage } from "./utils/messageHelpers";
 
 const App = () => {
-  const [chatMessages, setChatMessages] = useState<ChatMessageType[]>(() => {
-    const saved = localStorage.getItem("chatMessages");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [chatMessages, setChatMessages] = useLocalStorage<ChatMessageType[]>("chatMessages", []);
 
-  const [apiStatus, setApiStatus] = useState<
-    "checking" | "connected" | "error"
-  >("checking");
+  const [apiStatus, setApiStatus] = useState<ApiStatus>("checking");
 
   useEffect(() => {
     // Test the API connection when the app loads
@@ -21,27 +20,14 @@ const App = () => {
       setApiStatus(isConnected ? "connected" : "error");
 
       if (!isConnected) {
-        setChatMessages([
-          {
-            message:
-              "Failed to connect to the chatbot service. Please check your API key and try again.",
-            sender: "robot",
-            id: crypto.randomUUID(),
-            time: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-          },
-        ]);
+        setChatMessages([createRobotMessage(ERROR_MESSAGES.CONNECTION_FAILED)]);
       }
     };
 
     testConnection();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("chatMessages", JSON.stringify(chatMessages));
-  }, [chatMessages]);
+
 
   return (
     <div className="max-w-[600px] ml-auto mr-auto h-screen flex flex-col">
